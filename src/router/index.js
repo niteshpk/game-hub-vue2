@@ -1,23 +1,54 @@
 import Vue from "vue";
 import VueRouter from "vue-router";
-import HomeView from "../views/HomeView.vue";
 
 Vue.use(VueRouter);
 
 const routes = [
   {
     path: "/",
-    name: "home",
-    component: HomeView,
+    component: () =>
+      import(/* webpackChunkName: "main-layout" */ "../layouts/MainLayout.vue"),
+    children: [
+      {
+        path: "home",
+        component: () =>
+          import(/* webpackChunkName: "home" */ "../views/HomeView.vue"),
+      },
+      {
+        path: "my-account",
+        component: () =>
+          import(/* webpackChunkName: "home" */ "../views/MyAccountView.vue"),
+      },
+      {
+        path: "users",
+        component: () =>
+          import(/* webpackChunkName: "users" */ "../views/UsersView.vue"),
+      },
+    ],
   },
   {
-    path: "/about",
-    name: "about",
-    // route level code-splitting
-    // this generates a separate chunk (about.[hash].js) for this route
-    // which is lazy-loaded when the route is visited.
+    path: "/",
     component: () =>
-      import(/* webpackChunkName: "about" */ "../views/AboutView.vue"),
+      import(/* webpackChunkName: "auth-layout" */ "../layouts/AuthLayout.vue"),
+    children: [
+      {
+        path: "login",
+        component: () =>
+          import(/* webpackChunkName: "login" */ "../views/LoginView.vue"),
+      },
+      {
+        path: "register",
+        component: () =>
+          import(
+            /* webpackChunkName: "register" */ "../views/RegisterView.vue"
+          ),
+      },
+    ],
+  },
+
+  {
+    path: "*",
+    redirect: "/",
   },
 ];
 
