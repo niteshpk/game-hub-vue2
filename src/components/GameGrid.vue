@@ -1,14 +1,7 @@
 <template>
-  <div class="games-grid">
-    <div>
-      <div>
-        <!-- <div>loader skeleton</div> -->
-        <div>
-          <app-game-card-container />
-        </div>
-      </div>
-    </div>
-
+  <div class="d-flex flex-wrap test">
+    <!-- <div>loader skeleton</div> -->
+    <app-game-card-container v-for="n in 8" :key="n" class="col-3" />
   </div>
 </template>
 
