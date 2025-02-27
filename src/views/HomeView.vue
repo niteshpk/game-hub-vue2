@@ -1,5 +1,30 @@
 <template>
   <div class="home">
-    <h1>This is an home page</h1>
+    <div class="d-flex ">
+
+      <div>Sidebar</div>
+
+      <div>
+        <div>Heading</div>
+
+        <div class="d-flex">
+          <div>plateform selector</div>
+          <div>orderby selector</div>
+        </div>
+
+        <div>
+          <div>
+            <app-game-grid />
+          </div>
+        </div>
+
+      </div>
+    </div>
+
   </div>
+
+
+
+
+
 </template>

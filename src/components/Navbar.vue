@@ -1,84 +1,31 @@
 <template>
-  <v-app>
-    <v-card class=" overflow-hidden" height="100%" width="100%">
+  <v-toolbar dense elevation="4">
+    <v-app-bar-nav-icon></v-app-bar-nav-icon>
 
-      <app-system-bar />
+    <v-toolbar-title>GameHub</v-toolbar-title>
 
-      <v-app-bar color="light-blue darken-4" dark>
-        <v-app-bar-nav-icon @click="drawer = true"></v-app-bar-nav-icon>
+    <v-spacer></v-spacer>
 
-        <v-toolbar-title>Title</v-toolbar-title>
-      </v-app-bar>
+    <v-text-field dense hide-details solo clearable append-icon="mdi-magnify" placeholder="Search"></v-text-field>
 
 
-      <v-navigation-drawer v-model="drawer" absolute temporary>
-        <v-list-item>
-          <v-list-item-avatar>
-            <v-img src="https://randomuser.me/api/portraits/men/78.jpg"></v-img>
-          </v-list-item-avatar>
-
-          <v-list-item-content>
-            <v-list-item-title>John Leider</v-list-item-title>
-          </v-list-item-content>
-        </v-list-item>
-
-        <v-divider></v-divider>
-
-        <v-list dense>
-          <v-list-item v-for="item in items" :key="item.title" router link :to="item.to">
-            <v-list-item-icon>
-              <v-icon>{{ item.icon }}</v-icon>
-            </v-list-item-icon>
-
-            <v-list-item-content>
-              <v-list-item-title>{{ item.title }}</v-list-item-title>
-            </v-list-item-content>
-          </v-list-item>
-
-          <div class="logout">
-
-            <v-divider></v-divider>
-
-            <v-list-item @click="logout" link>
-              <v-list-item-icon>
-                <v-icon>mdi-logout</v-icon>
-              </v-list-item-icon>
-
-              <v-list-item-content>
-                <v-list-item-title>Logout</v-list-item-title>
-              </v-list-item-content>
-            </v-list-item>
-          </div>
-        </v-list>
-      </v-navigation-drawer>
-
-      <v-main>
-        <router-view />
-      </v-main>
-
-
-    </v-card>
-
-
-  </v-app>
+    <v-btn icon>
+      <v-icon>mdi-lightbulb-on-10</v-icon>
+    </v-btn>
+    <v-btn icon>
+      <v-icon>mdi-moon-waning-crescent</v-icon>
+    </v-btn>
+  </v-toolbar>
 
 </template>
 
 <script>
+
 export default {
   name: 'app-navbar',
-  data() {
-    return {
-      drawer: false,
-      error: false,
-      items: [
-        { title: 'Home', icon: 'mdi-home-city', to: '/home' },
-        { title: 'Users', icon: 'mdi-account-group-outline', to: '/users' },
-        { title: 'My Account', icon: 'mdi-account', to: 'my-account' },
-      ],
-      mini: true,
-    }
-  },
+  data: () => ({
+
+  }),
 }
 </script>
 

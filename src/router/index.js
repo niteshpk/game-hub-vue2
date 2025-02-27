@@ -10,42 +10,12 @@ const routes = [
       import(/* webpackChunkName: "main-layout" */ "../layouts/MainLayout.vue"),
     children: [
       {
-        path: "home",
+        path: "",
         component: () =>
           import(/* webpackChunkName: "home" */ "../views/HomeView.vue"),
       },
-      {
-        path: "my-account",
-        component: () =>
-          import(/* webpackChunkName: "home" */ "../views/MyAccountView.vue"),
-      },
-      {
-        path: "users",
-        component: () =>
-          import(/* webpackChunkName: "users" */ "../views/UsersView.vue"),
-      },
     ],
   },
-  {
-    path: "/",
-    component: () =>
-      import(/* webpackChunkName: "auth-layout" */ "../layouts/AuthLayout.vue"),
-    children: [
-      {
-        path: "login",
-        component: () =>
-          import(/* webpackChunkName: "login" */ "../views/LoginView.vue"),
-      },
-      {
-        path: "register",
-        component: () =>
-          import(
-            /* webpackChunkName: "register" */ "../views/RegisterView.vue"
-          ),
-      },
-    ],
-  },
-
   {
     path: "*",
     redirect: "/",
