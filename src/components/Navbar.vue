@@ -1,9 +1,9 @@
 <template>
   <div>
     <v-toolbar elevation="0">
-      <v-app-bar-nav-icon></v-app-bar-nav-icon>
+      <!-- <v-app-bar-nav-icon></v-app-bar-nav-icon> -->
 
-      <v-toolbar-title>GameHub</v-toolbar-title>
+      <v-toolbar-title>House of Games</v-toolbar-title>
 
       <v-spacer></v-spacer>
 

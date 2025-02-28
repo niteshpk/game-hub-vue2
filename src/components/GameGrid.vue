@@ -1,7 +1,9 @@
 <template>
-  <div class="d-flex flex-wrap test">
+  <div class="d-flex flex-wrap ">
     <!-- <div>loader skeleton</div> -->
-    <app-game-card-container v-for="n in 8" :key="n" class="col-3" />
+    <v-row class="my-5">
+      <app-game-card-container v-for="n in 8" :key="n" />
+    </v-row>
   </div>
 </template>
 

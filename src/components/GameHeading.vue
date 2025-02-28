@@ -1,14 +1,15 @@
 <template>
-  <v-col class="col-4">
-    <app-game-card />
-  </v-col>
+  <div>
+    <h1 class="py-2">{{ heading }}</h1>
+  </div>
 </template>
 
 <script>
 export default {
-  name: 'GameCardContainer',
+  name: 'GameHeading',
   data() {
     return {
+      heading: 'Games'
     }
   }
 }
