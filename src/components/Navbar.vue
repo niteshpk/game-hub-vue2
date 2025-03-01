@@ -1,16 +1,14 @@
 <template>
   <div>
     <v-toolbar elevation="0" class="fixed-toolbar">
-
       <v-toolbar-title>House of Games</v-toolbar-title>
 
       <v-spacer></v-spacer>
 
-      <v-text-field dense hide-details solo clearable prepend-inner-icon="mdi-magnify"
+      <v-text-field dense hide-details solo clearable prepend-inner-icon="mdi-magnify" v-model="searchText"
         placeholder="Search for games"></v-text-field>
 
       <v-spacer></v-spacer>
-
 
       <!-- Dark Mode Button -->
       <v-tooltip bottom>
@@ -20,10 +18,8 @@
             <v-icon v-else>mdi-white-balance-sunny</v-icon>
           </v-btn>
         </template>
-        <span>Toggle {{ isDarkTheme ? 'Light' : 'Dark' }} mode</span>
+        <span>Toggle {{ isDarkTheme ? "Light" : "Dark" }} mode</span>
       </v-tooltip>
-
-
     </v-toolbar>
 
     <v-main>
@@ -33,19 +29,33 @@
 </template>
 
 <script>
+import { mapActions } from "vuex";
 
 export default {
-  name: 'app-navbar',
+  name: "app-navbar",
   data: () => ({
     isDarkTheme: true,
   }),
   methods: {
+    ...mapActions("gameQuery", ["setSearchText"]),
+
     toggleTheme() {
       this.isDarkTheme = !this.isDarkTheme;
       this.$vuetify.theme.dark = this.isDarkTheme; // Toggle Vuetify theme
     },
   },
-}
+
+  computed: {
+    searchText: {
+      get() {
+        return this.$store.state.gameQuery.searchText;
+      },
+      set(value) {
+        this.setSearchText(value);
+      },
+    },
+  }
+};
 </script>
 
 <style scoped>

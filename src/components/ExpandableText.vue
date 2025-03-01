@@ -1,7 +1,7 @@
 <template>
     <div>
         {{ description }}
-        <v-btn small @click="toggleExpanded()">
+        <v-btn small @click="toggleExpanded()" class="warning">
             {{ expanded ? 'Show Less' : 'Read More' }}
         </v-btn>
 

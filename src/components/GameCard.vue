@@ -1,6 +1,6 @@
 <template>
   <v-card hover rounded outlined @click="handleGameClick()">
-    <v-img height="250" :src="game.background_image"></v-img>
+    <v-img height="250" :src="getCroppedImageUrl(game.background_image)"></v-img>
 
     <v-card-text>
       <v-row class="mx-0" align="center">
@@ -25,7 +25,7 @@
 </template>
 
 <script>
-
+import getCroppedImageUrl from '@/services/image-url'
 export default {
   name: 'GameCard',
   props: {
@@ -41,8 +41,10 @@ export default {
   },
   methods: {
     handleGameClick: function () {
-      console.log('Game clicked')
       this.$router.push({ name: 'game-detail', params: { slug: this.slug } })
+    },
+    getCroppedImageUrl: function (url) {
+      return getCroppedImageUrl(url);
     }
   }
 }

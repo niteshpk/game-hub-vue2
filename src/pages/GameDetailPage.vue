@@ -14,7 +14,7 @@
 
         <v-col class="col-6">
           <app-game-trailer />
-          <app-game-screenshots />
+          <app-game-screenshots class="mt-1" />
         </v-col>
       </v-row>
     </div>

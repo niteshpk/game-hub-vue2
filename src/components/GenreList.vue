@@ -1,9 +1,9 @@
 <template>
   <div>
-    <h3 class="py-2">Genres</h3>
+    <h3 class="py-2">Genres {{ getGameQuery.genres }}</h3>
     <v-list>
-      <v-list-item-group v-model="selectedGenre">
-        <v-list-item v-for="genre in genres" :key="genre.id" router link>
+      <v-list-item-group v-model="getGameQuery.genres">
+        <v-list-item v-for="genre in getGenres" :key="genre.id" link @click="setGenres(genre.id)" :value="genre.id">
           <v-list-item-avatar rounded>
             <v-img :src="getCroppedImageUrl(genre.image_background)"></v-img>
           </v-list-item-avatar>
@@ -19,25 +19,26 @@
 </template>
 
 <script>
-import Genres from '../data/Genres'
+import getCroppedImageUrl from '@/services/image-url'
+import { mapGetters, mapActions } from "vuex";
 
 export default {
   name: 'GenreList',
   data() {
     return {
-      genres: Genres.results,
-      selectedGenre: null,
+      selectedGenre: null
     }
   },
   methods: {
     getCroppedImageUrl: (url) => {
-      if (!url) return '';
+      return getCroppedImageUrl(url);
+    },
 
-      const target = 'media/';
-      const index = url.indexOf(target) + target.length;
-      return url.slice(0, index) + 'crop/600/400/' + url.slice(index);
-    }
-
+    ...mapActions("gameQuery", ["setGenres"]),
+  },
+  computed: {
+    ...mapGetters("genres", ['getGenres']),
+    ...mapGetters("gameQuery", ['getGameQuery']),
   }
 }
 </script>
