@@ -1,16 +1,16 @@
 <template>
   <div>
     <v-toolbar elevation="0" class="fixed-toolbar">
-      <v-toolbar-title>House of Games</v-toolbar-title>
+      <v-toolbar-title class="app-title" @click="handleAppTitleClick()">House of Games</v-toolbar-title>
 
       <v-spacer></v-spacer>
 
-      <v-text-field dense hide-details solo clearable prepend-inner-icon="mdi-magnify" v-model="searchText"
-        placeholder="Search for games"></v-text-field>
+      <v-text-field dense hide-details solo clearable prepend-inner-icon="mdi-magnify" :value="getGameQuery.search"
+        @keyup.enter="setSearch($event.target.value)" @keyup.tab="setSearch($event.target.value)"
+        @blur="setSearch($event.target.value)" placeholder="Search for games" />
 
       <v-spacer></v-spacer>
 
-      <!-- Dark Mode Button -->
       <v-tooltip bottom>
         <template v-slot:activator="{ on, attrs }">
           <v-btn icon @click="toggleTheme" v-bind="attrs" v-on="on">
@@ -29,7 +29,7 @@
 </template>
 
 <script>
-import { mapActions } from "vuex";
+import { mapActions, mapGetters } from "vuex";
 
 export default {
   name: "app-navbar",
@@ -37,23 +37,22 @@ export default {
     isDarkTheme: true,
   }),
   methods: {
-    ...mapActions("gameQuery", ["setSearchText"]),
+    ...mapActions("gameQuery", ["setSearch"]),
 
     toggleTheme() {
       this.isDarkTheme = !this.isDarkTheme;
       this.$vuetify.theme.dark = this.isDarkTheme; // Toggle Vuetify theme
     },
+
+    handleAppTitleClick() {
+      if (this.$route.path !== "/") {
+        this.$router.push("/");
+      }
+    },
   },
 
   computed: {
-    searchText: {
-      get() {
-        return this.$store.state.gameQuery.searchText;
-      },
-      set(value) {
-        this.setSearchText(value);
-      },
-    },
+    ...mapGetters("gameQuery", ["getGameQuery"]),
   }
 };
 </script>
@@ -70,5 +69,11 @@ export default {
 main {
   padding-top: 64px !important;
   min-height: 100vh;
+}
+
+.app-title {
+  font-size: 24px;
+  font-weight: 600;
+  cursor: pointer;
 }
 </style>

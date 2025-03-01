@@ -41,7 +41,7 @@ export default {
   },
   methods: {
     handleGameClick: function () {
-      this.$router.push({ name: 'game-detail', params: { slug: this.slug } })
+      this.$router.push({ name: 'game-detail', params: { slug: this.game.slug } })
     },
     getCroppedImageUrl: function (url) {
       return getCroppedImageUrl(url);

@@ -6,50 +6,83 @@ Vue.use(Vuex);
 const state = {
   gameQuery: {
     genres: null,
-    platformId: null,
-    sortOrder: null,
-    searchText: null,
+    parent_platforms: null,
+    ordering: null,
+    search: null,
     page: 0,
   },
 };
 
 const mutations = {
-  SET_SEARCH_TEXT(state, searchText) {
-    state.gameQuery.searchText = searchText;
-  },
-  SET_GENRE_ID(state, genres) {
-    state.gameQuery.genres = genres;
-    state.gameQuery.searchText = null; // Reset searchText (similar to Zustand behavior)
-  },
-  SET_PLATFORM_ID(state, platformId) {
-    state.gameQuery.platformId = platformId;
-    state.gameQuery.searchText = null; // Reset searchText
-  },
-  SET_SORT_ORDER(state, sortOrder) {
-    state.gameQuery.sortOrder = sortOrder;
-  },
-  SET_PAGE(state, page) {
-    state.gameQuery.page = page;
+  SET_GAME_QUERY(state, gameQuery) {
+    state.gameQuery = gameQuery;
   },
 };
 
 const actions = {
-  setSearchText({ commit }, searchText) {
-    commit("SET_SEARCH_TEXT", searchText);
+  nextPageData({ commit, dispatch }) {
+    const moreGamesLoading = this.getters["games/moreGamesLoading"];
+
+    if (moreGamesLoading) return;
+
+    const page = this.state.gameQuery.gameQuery.page;
+
+    commit("SET_GAME_QUERY", {
+      genres: null,
+      parent_platforms: null,
+      ordering: null,
+      search: null,
+      page: page + 1,
+    });
+    dispatch("games/loadMoreGames", null, { root: true });
   },
   setGenres({ commit, dispatch }, genres) {
-    commit("SET_GENRE_ID", genres);
+    commit("SET_GAME_QUERY", {
+      genres: genres,
+      parent_platforms: null,
+      ordering: null,
+      search: null,
+      page: 1,
+    });
+
     dispatch("games/fetchGames", null, { root: true });
   },
-  setPlatformId({ commit }, platformId) {
-    commit("SET_PLATFORM_ID", platformId);
+  setPlatform({ commit, dispatch }, parent_platforms) {
+    const { genres, ordering, search } = this.state.gameQuery.gameQuery;
+
+    commit("SET_GAME_QUERY", {
+      genres: genres,
+      parent_platforms: parent_platforms,
+      ordering: ordering,
+      search: search,
+      page: 1,
+    });
+
+    dispatch("games/fetchGames", null, { root: true });
   },
-  setSortOrder({ commit }, sortOrder) {
-    commit("SET_SORT_ORDER", sortOrder);
+  setOrdering({ commit, dispatch }, ordering) {
+    const { genres, parent_platforms, search } = this.state.gameQuery.gameQuery;
+
+    commit("SET_GAME_QUERY", {
+      genres: genres,
+      parent_platforms: parent_platforms,
+      ordering: ordering,
+      search: search,
+      page: 1,
+    });
+
+    dispatch("games/fetchGames", null, { root: true });
   },
-  nextPageData({ commit, dispatch }) {
-    const page = this.state.gameQuery.gameQuery.page;
-    commit("SET_PAGE", page + 1);
+
+  setSearch({ commit, dispatch }, search) {
+    commit("SET_GAME_QUERY", {
+      genres: null,
+      parent_platforms: null,
+      ordering: null,
+      search: search,
+      page: 1,
+    });
+
     dispatch("games/fetchGames", null, { root: true });
   },
 };

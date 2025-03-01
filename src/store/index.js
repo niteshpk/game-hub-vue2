@@ -15,4 +15,16 @@ export default new Vuex.Store({
     genres,
     platforms,
   },
+  getters: {
+    getSelectedGenresName: (state) => {
+      const selectedGenres = state.gameQuery.gameQuery.genres;
+      const genres = state.genres.genres;
+
+      if (!selectedGenres || !genres.length) return "All Games";
+
+      const name = genres.find((genre) => genre.id === selectedGenres)?.name;
+
+      return `${name} Games`;
+    },
+  },
 });

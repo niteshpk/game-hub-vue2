@@ -7,7 +7,7 @@
       </div>
 
       <div class="col-10">
-        <app-game-heading />
+        <app-game-heading :text="getSelectedGenresName" />
 
         <div class="d-flex">
           <app-platform-selector />
@@ -24,7 +24,12 @@
 
 </template>
 <script>
+import { mapGetters } from "vuex";
 
 export default {
+  name: 'HomePage',
+  computed: {
+    ...mapGetters(["getSelectedGenresName"]),
+  }
 }
 </script>

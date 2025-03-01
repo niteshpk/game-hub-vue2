@@ -6,10 +6,13 @@ export default {
   namespaced: true,
   state: {
     games: [],
-    isLoading: false,
+    initialGamesLoading: false,
+    moreGamesLoading: false,
   },
   getters: {
-    getGames: (state) => state.games,
+    games: (state) => state.games,
+    initialGamesLoading: (state) => state.initialGamesLoading,
+    moreGamesLoading: (state) => state.moreGamesLoading,
   },
   mutations: {
     addGames(state, games) {
@@ -18,50 +21,48 @@ export default {
     resetGames(state, games) {
       state.games = games;
     },
+    setInitialGamesLoading(state, initialGamesLoading) {
+      state.initialGamesLoading = initialGamesLoading;
+    },
+    setMoreGamesLoading(state, moreGamesLoading) {
+      state.moreGamesLoading = moreGamesLoading;
+    },
   },
   actions: {
     async fetchGames({ commit }) {
+      commit("setInitialGamesLoading", true);
+      commit("resetGames", []);
+
       const gameQuery = this.getters["gameQuery/getGameQuery"];
 
       try {
         const data = await gameClient.getAll({
           params: { ...gameQuery, page_size: 30 },
         });
-        // console.log(
-        //   "Fetched initial games:",
-        //   { ...gameQuery, page_size: 30 },
-        //   data.results.map((game) => ({
-        //     id: game.id,
-        //   }))
-        // );
+        // console.log(JSON.stringify({ ...gameQuery, page_size: 30 }));
         commit("resetGames", data.results);
       } catch (error) {
         console.error("Error fetching initial games:", error);
+      } finally {
+        commit("setInitialGamesLoading", false);
       }
     },
 
     async loadMoreGames({ commit }) {
-      if (this.state.isLoading) return;
-      this.state.isLoading = true;
+      commit("setMoreGamesLoading", true);
       const gameQuery = this.getters["gameQuery/getGameQuery"];
 
       try {
         const data = await gameClient.getAll({
-          params: { ...gameQuery, page_size: 10 },
+          params: { ...gameQuery, page_size: 30 },
         });
-        //
-        // console.log(
-        //   "Fetched loadMoreGames games:",
-        //   { ...gameQuery, page_size: 10 },
-        //   data.results.map((game) => ({
-        //     id: game.id,
-        //   }))
-        // );
+
+        // console.log(JSON.stringify({ ...gameQuery, page_size: 30 }));
         commit("addGames", data.results);
       } catch (error) {
         console.error("Error loading more games:", error);
       } finally {
-        this.state.isLoading = false;
+        commit("setMoreGamesLoading", false);
       }
     },
   },

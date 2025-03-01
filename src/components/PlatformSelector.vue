@@ -2,14 +2,14 @@
   <v-menu bottom :offset-y="offset">
     <template v-slot:activator="{ on, attrs }">
       <v-btn color="primary" dark v-bind="attrs" v-on="on" class="mr-2">
-        {{ selectedPlatform?.name }} <v-icon>mdi-chevron-down</v-icon>
+        {{ selectedPlatform }} <v-icon>mdi-chevron-down</v-icon>
       </v-btn>
     </template>
 
     <v-list>
-      <v-list-item-group v-model="selectedPlatform">
-        <v-list-item v-for="(plateform) in items" :key="plateform?.id" :value="plateform">
-          <v-list-item-title>{{ plateform?.name }}</v-list-item-title>
+      <v-list-item-group>
+        <v-list-item v-for="({ name, id }) in items" :key="id" :value="id" @click="setPlatform(id)">
+          <v-list-item-title>{{ name }}</v-list-item-title>
         </v-list-item>
       </v-list-item-group>
     </v-list>
@@ -18,6 +18,7 @@
 
 <script>
 import Platforms from '@/data/Platforms';
+import { mapGetters, mapActions } from "vuex";
 
 export default {
   name: 'PlatformSelector',
@@ -28,9 +29,17 @@ export default {
         name: platform.name,
         id: platform.id,
       })),
-      selectedPlatform: { name: 'Platform', id: null },
     }
-  }
+  },
+  methods: {
+    ...mapActions("gameQuery", ["setPlatform"]),
+  },
+  computed: {
+    ...mapGetters("gameQuery", ['getGameQuery']),
+    selectedPlatform() {
+      return this.items.find(platform => platform.id === this.getGameQuery.parent_platforms)?.name || 'Platform';
+    }
+  },
 }
 </script>
 
