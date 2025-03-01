@@ -2,14 +2,14 @@
   <v-menu bottom :offset-y="offset">
     <template v-slot:activator="{ on, attrs }">
       <v-btn color="primary" dark v-bind="attrs" v-on="on" class="mr-2">
-        Order By: Relavance <v-icon>mdi-chevron-down</v-icon>
+        Order By: {{ selectedSortOrder?.label }} <v-icon>mdi-chevron-down</v-icon>
       </v-btn>
     </template>
 
     <v-list>
-      <v-list-item-group v-model="selectedPlatform">
-        <v-list-item v-for="({ label }, index) in items" :key="index">
-          <v-list-item-title>{{ label }}</v-list-item-title>
+      <v-list-item-group v-model="selectedSortOrder">
+        <v-list-item v-for="(order, index) in items" :key="index" :value="order">
+          <v-list-item-title>{{ order?.label }}</v-list-item-title>
         </v-list-item>
       </v-list-item-group>
     </v-list>
@@ -32,7 +32,7 @@ export default {
     return {
       offset: true,
       items: sortOrders,
-      selectedSortOrder: null,
+      selectedSortOrder: { ...sortOrders[0] }
     }
   }
 }

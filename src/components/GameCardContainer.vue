@@ -1,16 +1,18 @@
 <template>
   <v-col class="col-4">
-    <app-game-card />
+    <app-game-card :game="game" />
   </v-col>
 </template>
 
 <script>
 export default {
   name: 'GameCardContainer',
-  data() {
-    return {
+  props: {
+    game: {
+      type: Object,
+      required: true
     }
-  }
+  },
 }
 </script>
 

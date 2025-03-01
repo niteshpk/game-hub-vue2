@@ -5,23 +5,13 @@
 </template>
 
 <script>
+import Game from '@/data/Game';
 
 export default {
     name: 'PlatformIconList',
     data() {
         return {
-            platforms:
-                [
-                    'pc',
-                    'playstation',
-                    'xbox',
-                    'nintendo',
-                    'mac',
-                    'linux',
-                    'android',
-                    'ios',
-                    'web',
-                ],
+            platforms: Game.parent_platforms.map(platform => platform.platform.slug),
             iconMap: {
                 pc: 'mdi-desktop-classic',
                 playstation: 'mdi-sony-playstation',

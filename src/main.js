@@ -12,6 +12,11 @@ import GameHeading from "./components/GameHeading.vue";
 import PlatformSelector from "./components/PlatformSelector.vue";
 import OrderBySelector from "./components/OrderBySelector.vue";
 import PlatformIconList from "./components/PlatformIconList.vue";
+import CriticScore from "./components/CriticScore.vue";
+import ExpandableText from "./components/ExpandableText.vue";
+import GameAttributes from "./components/GameAttributes.vue";
+import GameTrailer from "./components/GameTrailer.vue";
+import GameScreenshots from "./components/GameScreenshots.vue";
 
 Vue.config.productionTip = false;
 Vue.component("app-navbar", Navbar);
@@ -23,6 +28,11 @@ Vue.component("app-game-heading", GameHeading);
 Vue.component("app-platform-selector", PlatformSelector);
 Vue.component("app-order-by-selector", OrderBySelector);
 Vue.component("app-platform-icon-list", PlatformIconList);
+Vue.component("app-critic-score", CriticScore);
+Vue.component("app-expandable-text", ExpandableText);
+Vue.component("app-game-attributes", GameAttributes);
+Vue.component("app-game-trailer", GameTrailer);
+Vue.component("app-game-screenshots", GameScreenshots);
 
 new Vue({
   router,

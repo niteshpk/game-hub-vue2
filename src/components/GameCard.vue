@@ -1,6 +1,6 @@
 <template>
-  <v-card hover rounded>
-    <v-img height="250" :src="img"></v-img>
+  <v-card hover rounded outlined @click="handleGameClick()">
+    <v-img height="250" :src="game.background_image"></v-img>
 
     <v-card-text>
       <v-row class="mx-0" align="center">
@@ -10,13 +10,13 @@
         </div>
 
         <v-spacer></v-spacer>
-        <div class=" ms-4">
-          <v-chip class="white--text darken-4 bg-green green lighten-5 subtitle-2">{{ rating }}</v-chip>
+        <div class="ms-4">
+          <app-critic-score />
         </div>
       </v-row>
 
       <v-card-title class="px-0 pb-1">
-        {{ title }}
+        {{ game.name }}
         <v-icon class="mx-2">{{ icon }}</v-icon>
       </v-card-title>
     </v-card-text>
@@ -25,14 +25,24 @@
 </template>
 
 <script>
+
 export default {
   name: 'GameCard',
+  props: {
+    game: {
+      type: Object,
+      required: true
+    }
+  },
   data() {
     return {
-      title: 'Cafe Badilico',
-      rating: 92,
-      img: 'https://cdn.vuetifyjs.com/images/cards/cooking.png',
       icon: 'mdi-thumb-up',
+    }
+  },
+  methods: {
+    handleGameClick: function () {
+      console.log('Game clicked')
+      this.$router.push({ name: 'game-detail', params: { slug: this.slug } })
     }
   }
 }
