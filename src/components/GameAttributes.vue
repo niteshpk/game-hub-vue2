@@ -16,7 +16,7 @@
             <div class="definition-item">
                 <strong>Metascore:</strong>
                 <div>
-                    <app-critic-score :score="game.metacritic" />
+                    <app-critic-score :score="game.metacritic || 0" />
                 </div>
             </div>
         </v-col>
@@ -46,15 +46,15 @@
 </template>
 
 <script>
-import Game from '@/data/Game';
 
 export default {
     name: 'GameAttributes',
-    data() {
-        return {
-            game: Game
+    props: {
+        game: {
+            type: Object,
+            required: true
         }
-    },
+    }
 }
 </script>
 

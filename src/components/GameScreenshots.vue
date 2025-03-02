@@ -7,13 +7,20 @@
 </template>
 
 <script>
-import Screenshots from '@/data/Screenshots';
+import { mapGetters } from 'vuex';
 export default {
     name: 'GameScreenshots',
-    data() {
-        return {
-            screenshots: Screenshots.results
+    props: {
+        gameId: {
+            type: Number,
+            required: true
         }
     },
+    computed: {
+        ...mapGetters('game', ['screenshots']),
+    },
+    mounted() {
+        this.$store.dispatch('game/getScreenshots', this.gameId);
+    }
 }
 </script>

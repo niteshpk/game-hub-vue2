@@ -12,7 +12,7 @@ export default {
     }
   },
   created() {
-    this.fetchGames(); // Load games when the app starts
+    this.fetchGames();
   },
 }
 </script>

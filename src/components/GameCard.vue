@@ -10,8 +10,8 @@
         </div>
 
         <v-spacer></v-spacer>
-        <div class="ms-4">
-          <app-critic-score />
+        <div class="ms-4" v-if="game.metacritic">
+          <app-critic-score :score="game.metacritic" />
         </div>
       </v-row>
 

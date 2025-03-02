@@ -1,20 +1,25 @@
 <template>
-    <video :src="trailer.data[480]" :poster="trailer.preview" class="video" controls></video>
+    <div v-if="movie">
+        <video :src="movie.src" :poster="movie.preview" class="video" controls></video>
+    </div>
 </template>
 
 <script>
-import Movies from '@/data/Movies';
+import { mapGetters } from 'vuex';
+
 export default {
     name: 'GameTrailer',
-    data() {
-        return {
-            trailer: Movies.results[0],
+    props: {
+        gameId: {
+            type: Number,
+            required: true
         }
     },
     computed: {
-        ratingColor() {
-            return this.rating > 75 ? 'green' : this.rating > 60 ? 'yellow' : '';
-        }
+        ...mapGetters('game', ['movie']),
+    },
+    mounted() {
+        this.$store.dispatch("game/getMovie", this.gameId);
     }
 }
 </script>

@@ -1,6 +1,6 @@
 <template>
   <div>
-    <h3 class="py-2">Genres {{ getGameQuery.genres }}</h3>
+    <h3 class="py-2">Genres</h3>
     <v-list>
       <v-list-item-group v-model="getGameQuery.genres">
         <v-list-item v-for="genre in getGenres" :key="genre.id" link @click="setGenres(genre.id)" :value="genre.id">

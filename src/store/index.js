@@ -7,6 +7,7 @@ import games from "./games";
 import genres from "./genres";
 import platforms from "./platforms";
 import gameQuery from "./gameQuery";
+import game from "./game";
 
 export default new Vuex.Store({
   modules: {
@@ -14,6 +15,7 @@ export default new Vuex.Store({
     games,
     genres,
     platforms,
+    game,
   },
   getters: {
     getSelectedGenresName: (state) => {
