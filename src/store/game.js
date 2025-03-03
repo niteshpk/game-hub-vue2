@@ -5,28 +5,38 @@ export default {
   namespaced: true,
   state: {
     game: null,
-    isLoading: false,
     movie: null,
     screenshots: [],
+    isGameLoading: false,
+    isMovieLoading: false,
+    isScreenshotsLoading: false,
   },
   getters: {
     game: (state) => state.game,
-    isLoading: (state) => state.isLoading,
     movie: (state) => state.movie,
     screenshots: (state) => state.screenshots,
+    isGameLoading: (state) => state.isGameLoading,
+    isMovieLoading: (state) => state.isMovieLoading,
+    isScreenshotsLoading: (state) => state.isScreenshots,
   },
   mutations: {
     setGame(state, game) {
       state.game = game;
-    },
-    setIsLoading(state, isLoading) {
-      state.isLoading = isLoading;
     },
     setMovie(state, movie) {
       state.movie = movie;
     },
     setScreenshots(state, screenshots) {
       state.screenshots = screenshots;
+    },
+    setIsGameLoading(state, isGameLoading) {
+      state.isGameLoading = isGameLoading;
+    },
+    setIsMovieLoading(state, isMovieLoading) {
+      state.isMovieLoading = isMovieLoading;
+    },
+    setIsScreenshotsLoading(state, isScreenshotsLoading) {
+      state.isScreenshotsLoading = isScreenshotsLoading;
     },
   },
   actions: {
@@ -35,12 +45,12 @@ export default {
         return;
       }
 
-      if (this.state.isLoading) {
+      if (this.state.isGameLoading) {
         return;
       }
 
       commit("setGame", null);
-      commit("setIsLoading", true);
+      commit("setIsGameLoading", true);
 
       const gameClient = new APIClient("/games");
       try {
@@ -49,12 +59,13 @@ export default {
       } catch (error) {
         console.error("Error fetching game:", error);
       } finally {
-        commit("setIsLoading", false);
+        commit("setIsGameLoading", false);
       }
     },
 
     async getMovie({ commit }, id) {
       commit("setMovie", null);
+      commit("setIsMovieLoading", true);
 
       const gameClient = new APIClient("/games");
       try {
@@ -73,11 +84,14 @@ export default {
         commit("setMovie", newMovie);
       } catch (error) {
         console.error("Error fetching movies:", error);
+      } finally {
+        commit("setIsMovieLoading", false);
       }
     },
 
     async getScreenshots({ commit }, id) {
       commit("setScreenshots", []);
+      commit("setIsScreenshotsLoading", true);
       const gameClient = new APIClient("/games");
       try {
         const { results: screenshots } = await gameClient.get(
@@ -92,6 +106,8 @@ export default {
         commit("setScreenshots", newScreenshots);
       } catch (error) {
         console.error("Error fetching screenshots:", error);
+      } finally {
+        commit("setIsScreenshotsLoading", false);
       }
     },
 
@@ -99,7 +115,9 @@ export default {
       commit("setGame", null);
       commit("setMovie", null);
       commit("setScreenshots", []);
-      commit("setIsLoading", false);
+      commit("setIsGameLoading", false);
+      commit("setIsMovieLoading", false);
+      commit("setIsScreenshotsLoading", false);
     },
   },
 };
