@@ -29,26 +29,7 @@ export default {
     },
   },
   actions: {
-    async fetchGames({ commit }) {
-      commit("setInitialGamesLoading", true);
-      commit("resetGames", []);
-
-      const gameQuery = this.getters["gameQuery/getGameQuery"];
-
-      try {
-        const data = await gameClient.getAll({
-          params: { ...gameQuery, page_size: 30 },
-        });
-        // console.log(JSON.stringify({ ...gameQuery, page_size: 30 }));
-        commit("resetGames", data.results);
-      } catch (error) {
-        console.error("Error fetching initial games:", error);
-      } finally {
-        commit("setInitialGamesLoading", false);
-      }
-    },
-
-    async loadMoreGames({ commit }) {
+    async loadMoreGames({ commit, dispatch }) {
       commit("setMoreGamesLoading", true);
       const gameQuery = this.getters["gameQuery/getGameQuery"];
 
@@ -57,10 +38,12 @@ export default {
           params: { ...gameQuery, page_size: 30 },
         });
 
-        // console.log(JSON.stringify({ ...gameQuery, page_size: 30 }));
         commit("addGames", data.results);
       } catch (error) {
         console.error("Error loading more games:", error);
+        dispatch("error/raiseError", "Error loading games. Please try again.", {
+          root: true,
+        });
       } finally {
         commit("setMoreGamesLoading", false);
       }

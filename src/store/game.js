@@ -1,6 +1,8 @@
 import APIClient from "@/services/api-client";
 import getCroppedImageUrl from "@/services/image-url";
 
+const gameClient = new APIClient("/games");
+
 export default {
   namespaced: true,
   state: {
@@ -40,7 +42,7 @@ export default {
     },
   },
   actions: {
-    async fetchGame({ commit }, slug) {
+    async fetchGame({ commit, dispatch }, slug) {
       if (!slug) {
         return;
       }
@@ -52,22 +54,23 @@ export default {
       commit("setGame", null);
       commit("setIsGameLoading", true);
 
-      const gameClient = new APIClient("/games");
       try {
         const game = await gameClient.get(slug);
         commit("setGame", game);
       } catch (error) {
         console.error("Error fetching game:", error);
+        dispatch("error/raiseError", "Error fetching game. Please try again.", {
+          root: true,
+        });
       } finally {
         commit("setIsGameLoading", false);
       }
     },
 
-    async getMovie({ commit }, id) {
+    async getMovie({ commit, dispatch }, id) {
       commit("setMovie", null);
       commit("setIsMovieLoading", true);
 
-      const gameClient = new APIClient("/games");
       try {
         const {
           results: [movie],
@@ -84,15 +87,22 @@ export default {
         commit("setMovie", newMovie);
       } catch (error) {
         console.error("Error fetching movies:", error);
+        dispatch(
+          "error/raiseError",
+          "Error fetching movies. Please try again.",
+          {
+            root: true,
+          }
+        );
       } finally {
         commit("setIsMovieLoading", false);
       }
     },
 
-    async getScreenshots({ commit }, id) {
+    async getScreenshots({ commit, dispatch }, id) {
       commit("setScreenshots", []);
       commit("setIsScreenshotsLoading", true);
-      const gameClient = new APIClient("/games");
+
       try {
         const { results: screenshots } = await gameClient.get(
           `${id}/screenshots`
@@ -106,6 +116,13 @@ export default {
         commit("setScreenshots", newScreenshots);
       } catch (error) {
         console.error("Error fetching screenshots:", error);
+        dispatch(
+          "error/raiseError",
+          "Error fetching screenshots. Please try again.",
+          {
+            root: true,
+          }
+        );
       } finally {
         commit("setIsScreenshotsLoading", false);
       }

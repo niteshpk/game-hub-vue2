@@ -9,12 +9,15 @@
 
     <app-game-card-container v-for="game in games" :key="game.id" :game="game" v-scroll:#scroll-target="onScroll" />
 
-
     <template v-if="moreGamesLoading">
       <v-col class="col-4" v-for="n in 3" :key="n">
         <app-game-card-skeleton />
       </v-col>
     </template>
+
+    <!-- <v-col class="col-12" v-if="error && !games.length">
+      <app-error-card :errorMessage="error.message" :redirectUrl="'/'" />
+    </v-col> -->
   </v-row>
 </template>
 
@@ -31,6 +34,8 @@ export default {
   methods: {
     ...mapActions("gameQuery", ["setPage", "nextPageData"]),
 
+    // ...mapActions("error", ["clearError"]),
+
     onScroll(e) {
       this.offsetTop = e.target.scrollTop
 
@@ -42,6 +47,7 @@ export default {
   },
   computed: {
     ...mapGetters("games", ['games', 'initialGamesLoading', 'moreGamesLoading']),
+    // ...mapGetters("error", ["error"]),
   }
 }
 </script>
