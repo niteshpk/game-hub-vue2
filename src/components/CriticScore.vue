@@ -1,5 +1,7 @@
 <template>
-    <v-chip :class="`white--text darken-4 bg-${ratingColor} ${ratingColor} lighten-5 subtitle-2`">{{ score }}</v-chip>
+    <v-chip :color="ratingColor" class="subtitle-2 white--text">
+        {{ score }}
+    </v-chip>
 </template>
 
 <script>
@@ -13,7 +15,9 @@ export default {
     },
     computed: {
         ratingColor() {
-            return this.score > 75 ? 'green' : this.score > 60 ? 'yellow' : '';
+            if (this.score > 75) return 'green';
+            if (this.score > 60) return 'yellow';
+            return 'red'; // Default color for low scores
         }
     }
 }

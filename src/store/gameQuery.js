@@ -45,7 +45,7 @@ const actions = {
       page: 1,
     });
 
-    dispatch("games/fetchGames", null, { root: true });
+    dispatch("games/loadMoreGames", null, { root: true });
   },
   setPlatform({ commit, dispatch }, parent_platforms) {
     const { genres, ordering, search } = this.state.gameQuery.gameQuery;
@@ -58,7 +58,7 @@ const actions = {
       page: 1,
     });
 
-    dispatch("games/fetchGames", null, { root: true });
+    dispatch("games/loadMoreGames", null, { root: true });
   },
   setOrdering({ commit, dispatch }, ordering) {
     const { genres, parent_platforms, search } = this.state.gameQuery.gameQuery;
@@ -71,7 +71,7 @@ const actions = {
       page: 1,
     });
 
-    dispatch("games/fetchGames", null, { root: true });
+    dispatch("games/loadMoreGames", null, { root: true });
   },
 
   setSearch({ commit, dispatch }, search) {
@@ -83,7 +83,7 @@ const actions = {
       page: 1,
     });
 
-    dispatch("games/fetchGames", null, { root: true });
+    dispatch("games/loadMoreGames", null, { root: true });
   },
 };
 

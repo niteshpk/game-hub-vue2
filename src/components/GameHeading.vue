@@ -1,6 +1,6 @@
 <template>
-  <div>
-    <h1 class="py-2">{{ text }}</h1>
+  <div class="heading-container">
+    <h1 class="game-heading">{{ text }}</h1>
   </div>
 </template>
 
@@ -16,4 +16,27 @@ export default {
 }
 </script>
 
-<style scoped></style>
+<style scoped>
+.game-heading {
+  font-size: 2.5rem;
+  /* Default for large screens */
+  font-weight: bold;
+  padding: 1rem;
+}
+
+/* Tablet */
+@media (max-width: 1024px) {
+  .game-heading {
+    font-size: 2rem;
+    padding: 0.8rem;
+  }
+}
+
+/* Mobile */
+@media (max-width: 600px) {
+  .game-heading {
+    font-size: 1.5rem;
+    padding: 0.5rem;
+  }
+}
+</style>

@@ -32,13 +32,18 @@ export default {
     async loadMoreGames({ commit, dispatch }) {
       commit("setMoreGamesLoading", true);
       const gameQuery = this.getters["gameQuery/getGameQuery"];
+      const request = { ...gameQuery, page_size: 30 };
 
       try {
         const data = await gameClient.getAll({
-          params: { ...gameQuery, page_size: 30 },
+          params: request,
         });
 
-        commit("addGames", data.results);
+        if (request.page === 1) {
+          commit("resetGames", data.results);
+        } else {
+          commit("addGames", data.results);
+        }
       } catch (error) {
         console.error("Error loading more games:", error);
         dispatch("error/raiseError", "Error loading games. Please try again.", {

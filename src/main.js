@@ -19,6 +19,7 @@ import GameTrailer from "./components/GameTrailer.vue";
 import GameScreenshots from "./components/GameScreenshots.vue";
 import GameCardSkeleton from "./components/GameCardSkeleton.vue";
 import ErrorCard from "./components/ErrorCard.vue";
+import GenreSelector from "./components/GenreSelector.vue";
 
 Vue.config.productionTip = false;
 Vue.component("app-navbar", Navbar);
@@ -37,6 +38,7 @@ Vue.component("app-game-trailer", GameTrailer);
 Vue.component("app-game-screenshots", GameScreenshots);
 Vue.component("app-game-card-skeleton", GameCardSkeleton);
 Vue.component("app-error-card", ErrorCard);
+Vue.component("app-genre-selector", GenreSelector);
 
 new Vue({
   router,

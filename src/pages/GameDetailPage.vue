@@ -1,40 +1,39 @@
 <template>
   <div class="mt-5">
-    <v-btn icon @click="$router.push('/')" class="ml-3">
+    <!-- Back Button -->
+    <v-btn icon @click="goBack" class="ml-3">
       <v-icon>mdi-arrow-left</v-icon>
     </v-btn>
 
-    <div class="home ma-5">
+    <v-container class="home">
       <v-row>
-        <v-col class="col-6">
+        <!-- Left Column: Game Details -->
+        <v-col cols="12" md="6">
           <template v-if="isGameLoading">
-            <v-row>
-              <v-col>
-                <v-skeleton-loader type="article"></v-skeleton-loader>
-              </v-col>
-            </v-row>
+            <v-skeleton-loader type="article"></v-skeleton-loader>
             <v-row class="mt-5">
-              <v-col class="col-6">
+              <v-col cols="6">
                 <v-skeleton-loader type="heading" class="mb-2"></v-skeleton-loader>
                 <v-skeleton-loader type="text"></v-skeleton-loader>
               </v-col>
-              <v-col class="col-6">
+              <v-col cols="6">
                 <v-skeleton-loader type="heading" class="mb-2"></v-skeleton-loader>
                 <v-skeleton-loader type="text"></v-skeleton-loader>
               </v-col>
             </v-row>
           </template>
 
-          <template v-if="game">
+          <template v-else-if="game">
             <app-game-heading :text="game.name" />
             <app-expandable-text :text="game.description" />
             <app-game-attributes :game="game" class="mt-5" />
           </template>
         </v-col>
 
-        <v-col class="col-6">
-          <v-skeleton-loader type="image"
-            v-if="isGameLoading || isMovieLoading || isScreenshotsLoading"></v-skeleton-loader>
+        <!-- Right Column: Trailer & Screenshots -->
+        <v-col cols="12" md="6">
+          <v-skeleton-loader v-if="isGameLoading || isMovieLoading || isScreenshotsLoading"
+            type="image"></v-skeleton-loader>
 
           <template v-if="game">
             <app-game-trailer :gameId="game.id" />
@@ -42,27 +41,46 @@
           </template>
         </v-col>
       </v-row>
-    </div>
-
+    </v-container>
   </div>
 </template>
-<script>
-import { mapGetters } from 'vuex';
 
+<script>
+import { mapGetters, mapActions } from 'vuex';
 
 export default {
   name: 'GameDetailPage',
+  computed: {
+    ...mapGetters('game', [
+      'game',
+      'isGameLoading',
+      'isMovieLoading',
+      'isScreenshotsLoading'
+    ]),
+  },
   methods: {
+    ...mapActions('game', ['fetchGame', 'resetGame']),
     goBack() {
+      this.resetGame(); // Clears game state when navigating back
       this.$router.push('/');
-      this.$store.dispatch('game/resetGame');
     },
   },
-  computed: {
-    ...mapGetters('game', ['game', 'isGameLoading', 'isMovieLoading', 'isScreenshotsLoading']),
-  },
   mounted() {
-    this.$store.dispatch('game/fetchGame', this.$route.params.slug);
+    this.fetchGame(this.$route.params.slug);
   },
+  beforeUnmount() {
+    this.resetGame(); // Ensures cleanup when leaving the page
+  }
 }
 </script>
+
+<style scoped>
+/* Improves responsiveness and spacing */
+.home {
+  margin-top: 20px;
+}
+
+.v-container {
+  max-width: 1200px;
+}
+</style>

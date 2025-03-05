@@ -18,7 +18,9 @@ const routes = [
         path: "/games/:slug",
         name: "game-detail",
         component: () =>
-          import(/* webpackChunkName: "home" */ "../pages/GameDetailPage.vue"),
+          import(
+            /* webpackChunkName: "game-detail-page" */ "../pages/GameDetailPage.vue"
+          ),
       },
     ],
   },

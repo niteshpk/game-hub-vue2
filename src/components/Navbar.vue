@@ -1,13 +1,20 @@
 <template>
   <div>
-    <v-toolbar elevation="0" class="fixed-toolbar">
+    <v-app-bar app dense class="fixed-toolbar">
       <v-toolbar-title class="app-title" @click="handleAppTitleClick()">House of Games</v-toolbar-title>
 
       <v-spacer></v-spacer>
 
-      <v-text-field dense hide-details solo clearable prepend-inner-icon="mdi-magnify" :value="getGameQuery.search"
-        @keyup.enter="setSearch($event.target.value)" @keyup.tab="setSearch($event.target.value)"
-        @blur="setSearch($event.target.value)" placeholder="Search for games" />
+      <!-- Search Field (Hidden on Small Screens) -->
+      <v-text-field v-if="!isMobile" dense hide-details solo clearable prepend-inner-icon="mdi-magnify"
+        :value="getGameQuery.search" @keyup.enter="setSearch($event.target.value)"
+        @keyup.tab="setSearch($event.target.value)" @blur="setSearch($event.target.value)"
+        placeholder="Search for games" class="search-bar" />
+
+      <!-- Search Button (Visible Only on Small Screens) -->
+      <v-btn v-if="isMobile" icon @click="showSearch = !showSearch">
+        <v-icon>mdi-magnify</v-icon>
+      </v-btn>
 
       <v-spacer></v-spacer>
 
@@ -20,7 +27,14 @@
         </template>
         <span>Toggle {{ isDarkTheme ? "Light" : "Dark" }} mode</span>
       </v-tooltip>
-    </v-toolbar>
+    </v-app-bar>
+
+    <!-- Search Bar Overlay (Visible Only on Small Screens When Toggled) -->
+    <v-expand-transition>
+      <v-text-field v-if="isMobile && showSearch" solo dense hide-details clearable prepend-inner-icon="mdi-magnify"
+        :value="getGameQuery.search" @keyup.enter="setSearch($event.target.value)" @blur="showSearch = false"
+        placeholder="Search for games" class="mobile-search" :style="{ backgroundColor: mobileSearchBgColor }" />
+    </v-expand-transition>
 
     <v-main>
       <slot></slot>
@@ -35,7 +49,18 @@ export default {
   name: "app-navbar",
   data: () => ({
     isDarkTheme: true,
+    showSearch: false, // Controls search field visibility on mobile
   }),
+  computed: {
+    ...mapGetters("gameQuery", ["getGameQuery"]),
+    isMobile() {
+      return this.$vuetify.breakpoint.xsOnly;
+    },
+
+    mobileSearchBgColor() {
+      return this.isMobile && this.isDarkTheme ? "#444" : "light-grey";
+    },
+  },
   methods: {
     ...mapActions("gameQuery", ["setSearch"]),
 
@@ -50,10 +75,6 @@ export default {
       }
     },
   },
-
-  computed: {
-    ...mapGetters("gameQuery", ["getGameQuery"]),
-  }
 };
 </script>
 
@@ -66,14 +87,30 @@ export default {
   z-index: 1000;
 }
 
-main {
-  padding-top: 64px !important;
-  min-height: 100vh;
-}
-
 .app-title {
-  font-size: 24px;
+  font-size: 20px;
   font-weight: 600;
   cursor: pointer;
+}
+
+/* Adjust for mobile screens */
+@media (max-width: 600px) {
+  .app-title {
+    font-size: 18px;
+  }
+}
+
+/* Search Bar Styling */
+.search-bar {
+  max-width: 300px;
+}
+
+.mobile-search {
+  position: absolute;
+  top: 56px;
+  left: 0;
+  right: 0;
+  z-index: 999;
+  padding: 8px;
 }
 </style>
