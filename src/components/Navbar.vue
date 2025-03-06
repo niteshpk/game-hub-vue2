@@ -46,7 +46,7 @@
 import { mapActions, mapGetters } from "vuex";
 
 export default {
-  name: "app-navbar",
+  name: "NavBar",
   data: () => ({
     isDarkTheme: true,
     showSearch: false, // Controls search field visibility on mobile

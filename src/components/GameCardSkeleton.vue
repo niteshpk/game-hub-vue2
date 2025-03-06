@@ -13,7 +13,6 @@ export default {
     width: 100%;
     height: auto;
     max-width: 300px;
-    /* Prevents excessive width */
 }
 
 /* Adjust skeleton size for smaller screens */

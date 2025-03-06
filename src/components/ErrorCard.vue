@@ -1,18 +1,13 @@
 <template>
-    <v-card class="error-card w-100" outlined>
-        <v-card-title class="error-title">
-            <v-icon color="red" class="mr-2">mdi-alert-circle</v-icon>
-            Error
-        </v-card-title>
-
-        <v-card-text class="error-text">
-            {{ errorMessage || "Something went wrong. Please try again." }}
-        </v-card-text>
-
-        <v-card-actions class="justify-center">
-            <v-btn color="primary" @click="retry">Retry</v-btn>
-        </v-card-actions>
-    </v-card>
+    <v-container class=" error-container d-flex align-center justify-center" dark>
+        <v-card class="pa-5 " width="100%" align="center" outlined hover rounded>
+            <v-card-title class="headline  justify-center">Oops!</v-card-title>
+            <v-card-text class="error-text d-flex align-center justify-center">
+                {{ errorMessage }}
+            </v-card-text>
+            <v-btn color="primary" @click="redirect()">{{ buttonText }}</v-btn>
+        </v-card>
+    </v-container>
 </template>
 
 <script>
@@ -25,54 +20,45 @@ export default {
         },
         redirectUrl: {
             type: String,
-            required: true
+            required: false
+        },
+        buttonText: {
+            type: String,
+            default: "Go Home",
+            required: false
+        },
+        handler: {
+            type: Function,
+            default: () => { },
+            required: false
         }
     },
     methods: {
-        retry() {
-            this.$router.push(this.redirectUrl);
-        }
-    }
+        redirect() {
+            if (this.redirectUrl && this.$route.path !== this.redirectUrl) {
+                this.$router.push(this.redirectUrl).
+                    catch((err) => {
+                        if (err.name !== "NavigationDuplicated") {
+                            console.error(err);
+                        }
+                    });
+                return;
+            }
+
+            this.handler();
+        },
+    },
 };
 </script>
 
 <style scoped>
-.error-card {
-    max-width: 90%;
-    width: 400px;
-    margin: 20px auto;
+.error-container {
+    height: 100vh;
     padding: 16px;
-    border: 1px solid red;
-    border-radius: 8px;
-    text-align: center;
-}
-
-/* Adjustments for smaller screens */
-@media (max-width: 600px) {
-    .error-card {
-        max-width: 100%;
-        width: 90%;
-        padding: 12px;
-    }
-}
-
-.error-title {
-    font-size: 1.2rem;
-    font-weight: bold;
-    color: red;
-    display: flex;
-    align-items: center;
-    justify-content: center;
 }
 
 .error-text {
-    font-size: 1rem;
-    line-height: 1.4;
-}
-
-/* Center the retry button */
-.v-card-actions {
-    display: flex;
-    justify-content: center;
+    font-size: 18px;
+    color: #ff5252;
 }
 </style>

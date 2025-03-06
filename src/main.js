@@ -20,6 +20,8 @@ import GameScreenshots from "./components/GameScreenshots.vue";
 import GameCardSkeleton from "./components/GameCardSkeleton.vue";
 import ErrorCard from "./components/ErrorCard.vue";
 import GenreSelector from "./components/GenreSelector.vue";
+import Footer from "./components/Footer.vue";
+import ErrorPage from "./pages/ErrorPage.vue";
 
 Vue.config.productionTip = false;
 Vue.component("app-navbar", Navbar);
@@ -39,6 +41,8 @@ Vue.component("app-game-screenshots", GameScreenshots);
 Vue.component("app-game-card-skeleton", GameCardSkeleton);
 Vue.component("app-error-card", ErrorCard);
 Vue.component("app-genre-selector", GenreSelector);
+Vue.component("app-footer", Footer);
+Vue.component("app-error-page", ErrorPage);
 
 new Vue({
   router,

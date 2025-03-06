@@ -19,7 +19,6 @@ export default {
 <style scoped>
 .game-heading {
   font-size: 2.5rem;
-  /* Default for large screens */
   font-weight: bold;
   padding: 1rem;
 }

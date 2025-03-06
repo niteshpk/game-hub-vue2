@@ -40,6 +40,11 @@ export default {
         });
 
         if (request.page === 1) {
+          if (data.results.length === 0) {
+            dispatch("error/raiseError", "No games found.", {
+              root: true,
+            });
+          }
           commit("resetGames", data.results);
         } else {
           commit("addGames", data.results);

@@ -10,10 +10,10 @@
             </v-system-bar>
 
             <!-- Main content -->
-            <v-main>
-                <router-view />
-            </v-main>
+            <router-view />
         </app-navbar>
+        <!-- <app-footer></app-footer> -->
+
     </v-app>
 </template>
 
@@ -42,7 +42,6 @@ export default {
 
 .error-text {
     flex: 1;
-    /* Ensure text uses available space */
     text-overflow: ellipsis;
     white-space: nowrap;
 }

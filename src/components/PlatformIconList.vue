@@ -43,7 +43,6 @@ export default {
 .platform-icons {
     display: flex;
     flex-wrap: wrap;
-    /* Ensures icons wrap on small screens */
     gap: 10px;
     align-items: center;
 }

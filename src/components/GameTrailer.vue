@@ -30,10 +30,10 @@ export default {
 .video {
     width: 100%;
     max-width: 800px;
-    /* Limit max width for large screens */
     height: auto;
     aspect-ratio: 16 / 9;
     border-radius: 10px;
     box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.2);
+    border: 1px solid #ccc;
 }
 </style>

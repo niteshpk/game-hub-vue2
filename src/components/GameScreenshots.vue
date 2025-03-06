@@ -1,7 +1,7 @@
 <template>
     <v-row justify="center">
         <v-col v-for="file in screenshots" :key="file.id" cols="12" sm="6" md="4" lg="3" class="pa-2">
-            <v-img :src="file.image" :lazy-src="file.image" contain class="screenshot-image"></v-img>
+            <v-img :src="file.image" :lazy-src="file.image" contain class="screenshot-image" outlined></v-img>
         </v-col>
     </v-row>
 </template>
@@ -32,5 +32,6 @@ export default {
 .screenshot-image {
     border-radius: 8px;
     box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.2);
+    border: 1px solid #ccc;
 }
 </style>

@@ -85,10 +85,21 @@ const actions = {
 
     dispatch("games/loadMoreGames", null, { root: true });
   },
+
+  resetGameQuery({ commit }) {
+    commit("SET_GAME_QUERY", {
+      genres: null,
+      parent_platforms: null,
+      ordering: null,
+      search: "",
+      page: 0,
+    });
+  },
 };
 
 const getters = {
   getGameQuery: (state) => state.gameQuery,
+  getGameQueryGenre: (state) => state.gameQuery.genres,
 };
 
 export default {

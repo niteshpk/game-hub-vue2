@@ -22,11 +22,18 @@ const routes = [
             /* webpackChunkName: "game-detail-page" */ "../pages/GameDetailPage.vue"
           ),
       },
+      {
+        path: "/error",
+        name: "error",
+        props: { isRouteError: true },
+        component: () =>
+          import(/* webpackChunkName: "error-page" */ "../pages/ErrorPage.vue"),
+      },
     ],
   },
   {
     path: "*",
-    redirect: "/",
+    redirect: "/error",
   },
 ];
 

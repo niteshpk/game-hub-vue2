@@ -53,7 +53,6 @@ export default {
 </script>
 
 <style scoped>
-/* Ensures the menu adapts properly on smaller screens */
 @media (max-width: 600px) {
   .v-menu {
     width: 100%;

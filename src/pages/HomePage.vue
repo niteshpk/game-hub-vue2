@@ -8,20 +8,18 @@
 
       <!-- Main content -->
       <v-col cols="12" md="10">
-        <app-game-heading :text="getSelectedGenresName" />
+        <app-game-heading :text="genreName" />
 
-        <!-- Flex container for platform & order selectors -->
         <v-row>
-
           <!-- GenreSelector (Visible Only on Small Screens) -->
           <v-col cols="12" sm="6" v-show="$vuetify.breakpoint.xsOnly">
             <app-genre-selector />
           </v-col>
 
-          <v-col cols="12" sm="6">
+          <v-col cols="12" sm="3" md="2">
             <app-platform-selector />
           </v-col>
-          <v-col cols="12" sm="6">
+          <v-col cols="12" sm="2" md="1">
             <app-order-by-selector />
           </v-col>
         </v-row>
@@ -38,11 +36,18 @@ import { mapGetters } from "vuex";
 export default {
   name: "HomePage",
   computed: {
+    genreName() {
+      const name = this.getSelectedGenresName;
+
+      if (name?.toLowerCase()?.includes("games")) {
+        return name;
+      }
+
+      return `${name} Games`;
+    },
     ...mapGetters(["getSelectedGenresName"]),
   },
 };
 </script>
 
-<style scoped>
-/* Additional styling if needed */
-</style>
+<style scoped></style>

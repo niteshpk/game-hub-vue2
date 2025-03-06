@@ -1,5 +1,5 @@
 <template>
-  <div class="mt-5">
+  <div :class="{ 'mt-5': $vuetify.breakpoint.mdAndUp }">
     <!-- Back Button -->
     <v-btn icon @click="goBack" class="ml-3">
       <v-icon>mdi-arrow-left</v-icon>
@@ -61,7 +61,7 @@ export default {
   methods: {
     ...mapActions('game', ['fetchGame', 'resetGame']),
     goBack() {
-      this.resetGame(); // Clears game state when navigating back
+      this.resetGame();
       this.$router.push('/');
     },
   },
@@ -69,13 +69,12 @@ export default {
     this.fetchGame(this.$route.params.slug);
   },
   beforeUnmount() {
-    this.resetGame(); // Ensures cleanup when leaving the page
+    this.resetGame();
   }
 }
 </script>
 
 <style scoped>
-/* Improves responsiveness and spacing */
 .home {
   margin-top: 20px;
 }

@@ -7,7 +7,7 @@
         </template>
 
         <v-list dense>
-            <v-list-item-group v-model="getGameQuery.genres">
+            <v-list-item-group>
                 <v-list-item v-for="genre in getGenres" :key="genre.id" @click="setGenres([genre.id])">
                     <v-list-item-title>{{ genre.name }}</v-list-item-title>
                 </v-list-item>
@@ -28,9 +28,9 @@ export default {
     },
     computed: {
         ...mapGetters("genres", ["getGenres"]),
-        ...mapGetters("gameQuery", ["getGameQuery"]),
+        ...mapGetters("gameQuery", ["getGameQueryGenre"]),
         selectedGenreName() {
-            const genre = this.getGenres.find(g => g.id === this.getGameQuery.genres);
+            const genre = this.getGenres.find(g => g.id === this.getGameQueryGenre?.[0]);
             return genre ? genre.name : "Genre";
         },
     },
