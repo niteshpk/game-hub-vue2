@@ -12,8 +12,9 @@
             <!-- Main content -->
             <router-view />
         </app-navbar>
-        <!-- <app-footer></app-footer> -->
 
+        <!-- Footer -->
+        <app-footer></app-footer>
     </v-app>
 </template>
 

@@ -1,9 +1,6 @@
 <template>
   <div :class="{ 'mt-5': $vuetify.breakpoint.mdAndUp }">
-    <!-- Back Button -->
-    <v-btn icon @click="goBack" class="ml-3">
-      <v-icon>mdi-arrow-left</v-icon>
-    </v-btn>
+
 
     <v-container class="home">
       <v-row>
@@ -24,7 +21,24 @@
           </template>
 
           <template v-else-if="game">
-            <app-game-heading :text="game.name" />
+            <div class="d-flex align-center flex-direction-column">
+
+              <!-- Back Button -->
+              <v-tooltip bottom>
+                <template v-slot:activator="{ on, attrs }">
+                  <v-btn icon @click="goBack" v-bind="attrs" v-on="on">
+                    <v-icon>mdi-arrow-left</v-icon>
+                  </v-btn>
+                </template>
+                <span>Go back</span>
+              </v-tooltip>
+
+              <app-game-heading :text="game.name" />
+
+              <v-spacer></v-spacer>
+
+            </div>
+
             <app-expandable-text :text="game.description" />
             <app-game-attributes :game="game" class="mt-5" />
           </template>
@@ -81,5 +95,9 @@ export default {
 
 .v-container {
   max-width: 1200px;
+}
+
+.game-heading {
+  padding-left: 0px !important;
 }
 </style>
