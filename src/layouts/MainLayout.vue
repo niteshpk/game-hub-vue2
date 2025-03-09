@@ -1,99 +1,71 @@
 <template>
     <v-app>
-        <v-card class=" overflow-hidden" height="100%" width="100%">
+        <app-navbar>
+            <!-- Responsive error bar -->
+            <v-system-bar v-if="error" window dark color="red" class="error-bar">
+                <v-icon class="mr-2">mdi-alert-circle</v-icon>
+                <span class="error-text"> {{ error?.message || "An error occurred" }} </span>
+                <v-spacer></v-spacer>
+                <v-icon class="close-icon" @click="clearError">mdi-close</v-icon>
+            </v-system-bar>
 
-            <app-system-bar />
+            <!-- Main content -->
+            <router-view />
+        </app-navbar>
 
-            <v-app-bar color="light-blue darken-4" dark>
-                <v-app-bar-nav-icon @click="drawer = true"></v-app-bar-nav-icon>
-
-                <v-toolbar-title>Title</v-toolbar-title>
-            </v-app-bar>
-
-
-            <v-navigation-drawer v-model="drawer" absolute temporary>
-                <v-list-item>
-                    <v-list-item-avatar>
-                        <v-img src="https://randomuser.me/api/portraits/men/78.jpg"></v-img>
-                    </v-list-item-avatar>
-
-                    <v-list-item-content>
-                        <v-list-item-title>John Leider</v-list-item-title>
-                    </v-list-item-content>
-                </v-list-item>
-
-                <v-divider></v-divider>
-
-                <v-list dense>
-                    <v-list-item v-for="item in items" :key="item.title" router link :to="item.to">
-                        <v-list-item-icon>
-                            <v-icon>{{ item.icon }}</v-icon>
-                        </v-list-item-icon>
-
-                        <v-list-item-content>
-                            <v-list-item-title>{{ item.title }}</v-list-item-title>
-                        </v-list-item-content>
-                    </v-list-item>
-
-                    <div class="logout">
-
-                        <v-divider></v-divider>
-
-                        <v-list-item @click="logout" link>
-                            <v-list-item-icon>
-                                <v-icon>mdi-logout</v-icon>
-                            </v-list-item-icon>
-
-                            <v-list-item-content>
-                                <v-list-item-title>Logout</v-list-item-title>
-                            </v-list-item-content>
-                        </v-list-item>
-                    </div>
-                </v-list>
-            </v-navigation-drawer>
-
-            <v-main>
-                <router-view />
-            </v-main>
-
-
-        </v-card>
-
-
+        <!-- Footer -->
+        <app-footer></app-footer>
     </v-app>
-
 </template>
 
 <script>
-export default {
-    name: 'app-main-layout',
-    data() {
-        return {
-            drawer: false,
-            error: false,
-            items: [
-                { title: 'Home', icon: 'mdi-home-city', to: '/home' },
-                { title: 'Users', icon: 'mdi-account-group-outline', to: '/users' },
-                { title: 'My Account', icon: 'mdi-account', to: '/my-account' },
-                { title: 'Register', icon: 'mdi-account-plus', to: '/register' },
-                { title: 'Login', icon: 'mdi-login', to: 'login' },
-            ],
-            mini: true,
-        }
-    },
+import { mapGetters, mapActions } from "vuex";
 
+export default {
+    name: "AppMainLayout",
     methods: {
-        logout() {
-            this.$router.push('/login');
-        }
+        ...mapActions("error", ["clearError"]),
+    },
+    computed: {
+        ...mapGetters("error", ["error"]),
     }
-}
+};
 </script>
 
 <style scoped>
-.logout {
-    position: absolute;
-    bottom: 0;
-    width: 100%;
+.error-bar {
+    padding: 8px;
+    font-size: 14px;
+    display: flex;
+    align-items: center;
+    animation: fadeIn 0.3s ease-in-out;
+}
+
+.error-text {
+    flex: 1;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.close-icon {
+    cursor: pointer;
+    transition: transform 0.2s ease-in-out;
+}
+
+.close-icon:hover {
+    transform: scale(1.1);
+}
+
+/* Smooth fade-in animation */
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(-5px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
 }
 </style>

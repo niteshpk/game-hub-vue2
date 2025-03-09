@@ -10,45 +10,30 @@ const routes = [
       import(/* webpackChunkName: "main-layout" */ "../layouts/MainLayout.vue"),
     children: [
       {
-        path: "home",
+        path: "",
         component: () =>
-          import(/* webpackChunkName: "home" */ "../views/HomeView.vue"),
+          import(/* webpackChunkName: "home" */ "../pages/HomePage.vue"),
       },
       {
-        path: "my-account",
-        component: () =>
-          import(/* webpackChunkName: "home" */ "../views/MyAccountView.vue"),
-      },
-      {
-        path: "users",
-        component: () =>
-          import(/* webpackChunkName: "users" */ "../views/UsersView.vue"),
-      },
-    ],
-  },
-  {
-    path: "/",
-    component: () =>
-      import(/* webpackChunkName: "auth-layout" */ "../layouts/AuthLayout.vue"),
-    children: [
-      {
-        path: "login",
-        component: () =>
-          import(/* webpackChunkName: "login" */ "../views/LoginView.vue"),
-      },
-      {
-        path: "register",
+        path: "/games/:slug",
+        name: "game-detail",
         component: () =>
           import(
-            /* webpackChunkName: "register" */ "../views/RegisterView.vue"
+            /* webpackChunkName: "game-detail-page" */ "../pages/GameDetailPage.vue"
           ),
+      },
+      {
+        path: "/error",
+        name: "error",
+        props: { isRouteError: true },
+        component: () =>
+          import(/* webpackChunkName: "error-page" */ "../pages/ErrorPage.vue"),
       },
     ],
   },
-
   {
     path: "*",
-    redirect: "/",
+    redirect: "/error",
   },
 ];
 
