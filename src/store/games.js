@@ -1,6 +1,6 @@
 import APIClient from "@/services/api-client";
 
-const gameClient = new APIClient("/games");
+const gameClient = new APIClient("/api/v1/games");
 
 export default {
   namespaced: true,

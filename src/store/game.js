@@ -1,7 +1,7 @@
 import APIClient from "@/services/api-client";
 import getCroppedImageUrl from "@/services/image-url";
 
-const gameClient = new APIClient("/games");
+const gameClient = new APIClient("/api/v1/games");
 
 export default {
   namespaced: true,

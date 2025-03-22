@@ -1,10 +1,7 @@
 import axios from "axios";
 
 const axiosInstance = axios.create({
-  baseURL: "https://api.rawg.io/api",
-  params: {
-    key: "1a6c80cd28c4452c8e388d0fba2d6fe6",
-  },
+  baseURL: process.env.VUE_APP_API_URL,
 });
 
 class APIClient {
